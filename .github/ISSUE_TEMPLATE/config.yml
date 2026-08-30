@@ -1,0 +1,11 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Private product support
+    url: https://app.pushman.whitekiwi.link/support/
+    about: Get account or private-data help without posting publicly.
+  - name: Security report
+    url: https://github.com/pushmanhq/pushman/security/advisories/new
+    about: Report a suspected vulnerability privately.
+  - name: CLI issue tracker
+    url: https://github.com/pushmanhq/pushman-cli/issues
+    about: Report CLI-specific source, packaging, or command behavior.

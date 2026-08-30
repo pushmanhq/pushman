@@ -1,0 +1,846 @@
+openapi: 3.1.0
+info:
+  title: Pushman Public API
+  version: 1.0.0
+  description: Supported API for the Pushman CLI and developer automation.
+  license:
+    name: MIT
+    identifier: MIT
+servers:
+  - url: https://api.pushman.whitekiwi.link/v1
+    description: Production API origin.
+security:
+  - bearerAuth: []
+tags:
+  - name: Authorization
+    description: Browser-assisted CLI account authorization.
+  - name: Pairing
+    description: Interactive CLI authorization.
+  - name: Messages
+    description: Push creation and sender history.
+  - name: Devices
+    description: Eligible receiving-device discovery.
+  - name: Usage
+    description: Account send quota.
+  - name: Sender
+    description: The authenticated paired CLI credential.
+paths:
+  /device-authorizations:
+    post:
+      tags:
+        - Authorization
+      operationId: createDeviceAuthorization
+      summary: Start browser-assisted CLI account authorization.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - client_id
+                - suggested_name
+                - platform
+              properties:
+                client_id:
+                  type: string
+                  const: pushman-cli
+                scope:
+                  type: string
+                  const: push devices:read history:read usage:read
+                  default: push devices:read history:read usage:read
+                suggested_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                platform:
+                  type: string
+                  enum:
+                    - darwin
+                    - linux
+                    - windows
+      responses:
+        '200':
+          description: Device authorization created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceAuthorization'
+        default:
+          $ref: '#/components/responses/APIError'
+  /oauth/token:
+    post:
+      tags:
+        - Authorization
+      operationId: exchangeDeviceCode
+      summary: Exchange an approved device code for a CLI credential.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - grant_type
+                - device_code
+                - client_id
+              properties:
+                grant_type:
+                  type: string
+                  const: urn:ietf:params:oauth:grant-type:device_code
+                device_code:
+                  type: string
+                client_id:
+                  type: string
+                  const: pushman-cli
+      responses:
+        '200':
+          description: CLI credential issued once.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DeviceToken'
+        '400':
+          description: Authorization is pending, denied, expired, slowed down, or invalid.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OAuthError'
+        default:
+          $ref: '#/components/responses/APIError'
+  /pairings:
+    post:
+      tags:
+        - Pairing
+      operationId: createPairing
+      summary: Start pairing a CLI.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - suggestedName
+                - platform
+              properties:
+                suggestedName:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                platform:
+                  type: string
+                  enum:
+                    - darwin
+                    - linux
+                    - windows
+      responses:
+        '201':
+          description: Pairing created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PairingCreated'
+        default:
+          $ref: '#/components/responses/APIError'
+  /pairings/{pairingId}:
+    get:
+      tags:
+        - Pairing
+      operationId: getPairing
+      summary: Poll a pairing attempt.
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/PairingId'
+        - name: pairingSecret
+          in: header
+          required: true
+          schema:
+            type: string
+          description: One-time secret returned out of band when pairing is created.
+      responses:
+        '200':
+          description: Current pairing state.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pairing'
+        default:
+          $ref: '#/components/responses/APIError'
+  /messages:
+    post:
+      tags:
+        - Messages
+      operationId: createMessage
+      summary: Accept a push message for delivery.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageInput'
+      responses:
+        '202':
+          description: Message transaction committed and queued.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageAccepted'
+        default:
+          $ref: '#/components/responses/APIError'
+    get:
+      tags:
+        - Messages
+      operationId: listOwnMessages
+      summary: List messages sent by the authenticated paired CLI.
+      parameters:
+        - $ref: '#/components/parameters/Cursor'
+        - $ref: '#/components/parameters/Limit'
+      responses:
+        '200':
+          description: Sent message page.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessagePage'
+        default:
+          $ref: '#/components/responses/APIError'
+  /messages/{messageId}:
+    get:
+      tags:
+        - Messages
+      operationId: getOwnMessage
+      summary: Get one logical message and its retained revisions sent by the authenticated paired CLI.
+      parameters:
+        - $ref: '#/components/parameters/MessageId'
+      responses:
+        '200':
+          description: Sent logical message detail.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageDetail'
+        default:
+          $ref: '#/components/responses/APIError'
+  /sender-credentials/current:
+    get:
+      tags:
+        - Sender
+      operationId: getCurrentSenderCredential
+      summary: Show the authenticated paired CLI.
+      responses:
+        '200':
+          description: Current sender credential.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SenderCredential'
+        default:
+          $ref: '#/components/responses/APIError'
+    patch:
+      tags:
+        - Sender
+      operationId: updateCurrentSenderCredential
+      summary: Rename the authenticated paired CLI.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+      responses:
+        '200':
+          description: Renamed sender credential.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SenderCredential'
+        default:
+          $ref: '#/components/responses/APIError'
+    delete:
+      tags:
+        - Sender
+      operationId: revokeCurrentSenderCredential
+      summary: Revoke the authenticated paired CLI.
+      responses:
+        '204':
+          description: Credential revoked immediately.
+        default:
+          $ref: '#/components/responses/APIError'
+  /devices:
+    get:
+      tags:
+        - Devices
+      operationId: listDevices
+      summary: List receiving devices visible to the sender.
+      responses:
+        '200':
+          description: Receiving devices.
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required:
+                  - items
+                properties:
+                  items:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Device'
+        default:
+          $ref: '#/components/responses/APIError'
+  /usage:
+    get:
+      tags:
+        - Usage
+      operationId: getUsage
+      summary: Get current account send usage.
+      responses:
+        '200':
+          description: Current UTC monthly usage.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Usage'
+        default:
+          $ref: '#/components/responses/APIError'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: opaque
+  parameters:
+    PairingId:
+      name: pairingId
+      in: path
+      required: true
+      schema:
+        $ref: '#/components/schemas/PairingId'
+    MessageId:
+      name: messageId
+      in: path
+      required: true
+      description: Any retained revision ID in the logical message.
+      schema:
+        $ref: '#/components/schemas/MessageId'
+    Cursor:
+      name: cursor
+      in: query
+      schema:
+        type: string
+    Limit:
+      name: limit
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+  responses:
+    APIError:
+      description: Request failed.
+      headers:
+        X-Request-ID:
+          schema:
+            type: string
+        Retry-After:
+          schema:
+            type: integer
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    Error:
+      type: object
+      additionalProperties: true
+      required:
+        - code
+        - message
+        - requestId
+      properties:
+        code:
+          type: string
+          pattern: ^[a-z][a-z0-9_]*$
+        message:
+          type: string
+        requestId:
+          type: string
+        retryAfter:
+          type: integer
+          minimum: 0
+          description: Seconds until a retry is permitted.
+    ErrorResponse:
+      type: object
+      additionalProperties: true
+      required:
+        - error
+      properties:
+        error:
+          $ref: '#/components/schemas/Error'
+    DeviceAuthorization:
+      type: object
+      additionalProperties: true
+      required:
+        - device_code
+        - user_code
+        - verification_uri
+        - verification_uri_complete
+        - expires_in
+        - interval
+      properties:
+        device_code:
+          type: string
+          description: High-entropy polling secret that must never be displayed or put in a URL.
+        user_code:
+          type: string
+          pattern: ^[A-Z0-9]{4}-[A-Z0-9]{4}$
+        verification_uri:
+          type: string
+          format: uri
+        verification_uri_complete:
+          type: string
+          format: uri
+        expires_in:
+          type: integer
+          minimum: 1
+        interval:
+          type: integer
+          minimum: 1
+    DeviceToken:
+      type: object
+      additionalProperties: true
+      required:
+        - access_token
+        - token_type
+        - scope
+        - sender_name
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          const: Bearer
+        scope:
+          type: string
+          const: push devices:read history:read usage:read
+        sender_name:
+          type: string
+          minLength: 1
+          maxLength: 64
+    OAuthError:
+      type: object
+      additionalProperties: true
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          enum:
+            - authorization_pending
+            - slow_down
+            - access_denied
+            - expired_token
+            - invalid_grant
+            - invalid_request
+        error_description:
+          type: string
+    PairingId:
+      type: string
+      pattern: ^pair_[0-9A-HJKMNP-TV-Z]{26}$
+    PairingCreated:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - userCode
+        - verificationUri
+        - expiresAt
+        - interval
+        - status
+        - pairingSecret
+      properties:
+        id:
+          $ref: '#/components/schemas/PairingId'
+        userCode:
+          type: string
+          pattern: ^[A-Z0-9]{4}-[A-Z0-9]{4}$
+        verificationUri:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+        interval:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          const: pending
+        pairingSecret:
+          type: string
+          description: One-time polling secret; never put it in a URL.
+    IssuedCredential:
+      type: object
+      additionalProperties: true
+      required:
+        - token
+        - name
+      description: Returned once after pairing approval or token creation.
+      properties:
+        token:
+          type: string
+        name:
+          type: string
+    Pairing:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - userCode
+        - verificationUri
+        - expiresAt
+        - interval
+        - status
+      properties:
+        id:
+          $ref: '#/components/schemas/PairingId'
+        userCode:
+          type: string
+          pattern: ^[A-Z0-9]{4}-[A-Z0-9]{4}$
+        verificationUri:
+          type: string
+          format: uri
+        expiresAt:
+          type: string
+          format: date-time
+        interval:
+          type: integer
+          minimum: 1
+          description: Minimum polling interval in seconds.
+        status:
+          type: string
+          enum:
+            - pending
+            - approved
+            - denied
+            - expired
+        credential:
+          $ref: '#/components/schemas/IssuedCredential'
+    MessageId:
+      type: string
+      pattern: ^msg_[0-9A-HJKMNP-TV-Z]{26}$
+    LogicalMessageId:
+      type: string
+      pattern: ^lmsg_[0-9A-HJKMNP-TV-Z]{26}$
+    DeliveryState:
+      type: string
+      enum:
+        - accepted
+        - sent
+        - failed
+    MessageSummary:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - logicalMessageId
+        - title
+        - body
+        - senderName
+        - acceptedAt
+        - read
+        - updateCount
+        - deliveryState
+      properties:
+        id:
+          $ref: '#/components/schemas/MessageId'
+        logicalMessageId:
+          $ref: '#/components/schemas/LogicalMessageId'
+        title:
+          type: string
+        subtitle:
+          type: string
+        body:
+          type: string
+        senderName:
+          type: string
+        acceptedAt:
+          type: string
+          format: date-time
+        read:
+          type: boolean
+        updateCount:
+          type: integer
+          minimum: 1
+        deliveryState:
+          $ref: '#/components/schemas/DeliveryState'
+    MessagePage:
+      type: object
+      additionalProperties: true
+      required:
+        - items
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageSummary'
+        nextCursor:
+          type: string
+    RestrictedIdentifier:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: ^[A-Za-z0-9._:-]+$
+    MessageInput:
+      type: object
+      additionalProperties: false
+      required:
+        - body
+      properties:
+        title:
+          type: string
+          maxLength: 250
+        subtitle:
+          type: string
+          maxLength: 250
+        body:
+          type: string
+          minLength: 1
+          maxLength: 4096
+        url:
+          type: string
+          maxLength: 2048
+          format: uri
+        group:
+          $ref: '#/components/schemas/RestrictedIdentifier'
+        image:
+          type: string
+          format: uri
+          maxLength: 2048
+          pattern: ^https://
+        sound:
+          type: string
+          enum:
+            - default
+            - none
+          default: default
+        key:
+          $ref: '#/components/schemas/RestrictedIdentifier'
+        format:
+          type: string
+          enum:
+            - plain
+            - monospace
+          default: plain
+        devices:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          description: Receiving-device nicknames. Omit to target all eligible devices.
+          items:
+            type: string
+            minLength: 1
+            maxLength: 64
+    MessageAccepted:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - logicalMessageId
+        - acceptedAt
+        - targetCount
+      properties:
+        id:
+          $ref: '#/components/schemas/MessageId'
+        logicalMessageId:
+          type: string
+          pattern: ^lmsg_[0-9A-HJKMNP-TV-Z]{26}$
+        acceptedAt:
+          type: string
+          format: date-time
+        targetCount:
+          type: integer
+          minimum: 1
+    DeviceId:
+      type: string
+      pattern: ^dev_[0-9A-HJKMNP-TV-Z]{26}$
+    MessageDelivery:
+      type: object
+      additionalProperties: true
+      required:
+        - deviceId
+        - deviceName
+        - state
+      properties:
+        deviceId:
+          $ref: '#/components/schemas/DeviceId'
+        deviceName:
+          type: string
+        state:
+          $ref: '#/components/schemas/DeliveryState'
+        failureCode:
+          type: string
+    MessageRevision:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - title
+        - body
+        - senderName
+        - acceptedAt
+        - sound
+        - format
+        - deliveries
+      properties:
+        id:
+          $ref: '#/components/schemas/MessageId'
+        title:
+          type: string
+        subtitle:
+          type: string
+        body:
+          type: string
+        senderName:
+          type: string
+        acceptedAt:
+          type: string
+          format: date-time
+        url:
+          type: string
+          format: uri
+        group:
+          $ref: '#/components/schemas/RestrictedIdentifier'
+        image:
+          type: string
+          format: uri
+        sound:
+          type: string
+          enum:
+            - default
+            - none
+        format:
+          type: string
+          enum:
+            - plain
+            - monospace
+        deliveries:
+          type: array
+          items:
+            $ref: '#/components/schemas/MessageDelivery'
+    MessageDetail:
+      type: object
+      additionalProperties: true
+      required:
+        - logicalMessageId
+        - read
+        - revisions
+      properties:
+        logicalMessageId:
+          $ref: '#/components/schemas/LogicalMessageId'
+        read:
+          type: boolean
+        revisions:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/MessageRevision'
+    SenderCredential:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - name
+        - kind
+        - createdAt
+      properties:
+        id:
+          type: string
+          pattern: ^snd_[0-9A-HJKMNP-TV-Z]{26}$
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        kind:
+          type: string
+          enum:
+            - paired_cli
+            - automation
+        authorizationMethod:
+          type: string
+          enum:
+            - app_pair
+            - web_login
+          description: Approval path for CLI credentials; omitted for automation tokens.
+        createdAt:
+          type: string
+          format: date-time
+        lastUsedAt:
+          type: string
+          format: date-time
+    Device:
+      type: object
+      additionalProperties: true
+      required:
+        - id
+        - name
+        - platform
+        - notificationStatus
+        - eligible
+      properties:
+        id:
+          $ref: '#/components/schemas/DeviceId'
+        name:
+          type: string
+          minLength: 1
+          maxLength: 64
+        platform:
+          type: string
+          enum:
+            - ios
+        notificationStatus:
+          type: string
+          enum:
+            - enabled
+            - disabled
+            - unknown
+        eligible:
+          type: boolean
+    Usage:
+      type: object
+      additionalProperties: true
+      required:
+        - used
+        - limit
+        - periodStart
+        - periodEnd
+      properties:
+        used:
+          type: integer
+          minimum: 0
+        limit:
+          type: integer
+          minimum: 0
+        periodStart:
+          type: string
+          format: date-time
+        periodEnd:
+          type: string
+          format: date-time

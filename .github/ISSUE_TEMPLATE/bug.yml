@@ -1,0 +1,51 @@
+name: Bug report
+description: Report reproducible Pushman product behavior
+title: "bug: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Never include tokens, notification content, complete private URLs, pairing codes, account identifiers, or unredacted logs.
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Surface
+      options:
+        - iPhone app
+        - Hosted service
+        - Login or pairing
+        - Public API
+        - Documentation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      description: App or CLI version, when applicable
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproduction
+      description: Provide minimal steps using fictional or redacted values.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+    validations:
+      required: true
+  - type: checkboxes
+    id: privacy
+    attributes:
+      label: Privacy check
+      options:
+        - label: I removed credentials, notification content, private URLs, identifiers, and unredacted logs.
+          required: true
