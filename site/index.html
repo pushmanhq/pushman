@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#080b12">
+  <meta name="description" content="Send useful notifications from your terminal to your iPhone with one short command.">
+  <meta property="og:title" content="Pushman — terminal to iPhone notifications">
+  <meta property="og:description" content="A focused push harness for scripts, agents, and long-running jobs. Now in public beta.">
+  <title>Pushman — terminal to iPhone notifications</title>
+  <link rel="icon" href="/icon.png">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="wordmark" href="/" aria-label="Pushman home">
+      <img src="/icon.png" alt="">
+      <span>Pushman</span>
+    </a>
+    <nav aria-label="Primary navigation">
+      <a href="https://github.com/pushmanhq/pushman/blob/main/docs/GETTING_STARTED.md">Docs</a>
+      <a href="https://github.com/pushmanhq/pushman">GitHub</a>
+      <a href="https://app.pushman.whitekiwi.link/support/">Support</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="status"><span aria-hidden="true"></span>Public beta</p>
+        <h1 id="hero-title">Your terminal has something to say.</h1>
+        <p class="lede">Send a useful notification from a script, agent, or long-running job straight to your iPhone.</p>
+        <div class="actions">
+          <a class="button primary" href="https://github.com/pushmanhq/pushman/blob/main/docs/GETTING_STARTED.md">Get started</a>
+          <a class="button secondary" href="https://github.com/pushmanhq/pushman-cli">View the CLI</a>
+        </div>
+        <p class="beta-note">Free during beta · 200 accepted pushes per month · iPhone first</p>
+      </div>
+
+      <div class="demo" aria-label="Pushman command example">
+        <div class="terminal">
+          <div class="terminal-bar"><span></span><span></span><span></span><b>terminal</b></div>
+          <pre><code><span class="prompt">$</span> pushman push "Deploy complete" \
+  --title production \
+  --url https://example.com/runs/42
+
+<span class="accepted">Accepted</span> msg_01… for 1 device</code></pre>
+        </div>
+        <div class="notification">
+          <img src="/icon.png" alt="">
+          <div>
+            <p><strong>production</strong><time>now</time></p>
+            <span>Deploy complete</span>
+            <small>macmini</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-strip" aria-label="Product qualities">
+      <span>Native iPhone delivery</span>
+      <span>One-command setup</span>
+      <span>Seven-day synced history</span>
+      <span>Local stdio MCP</span>
+    </section>
+
+    <section class="section" aria-labelledby="how-title">
+      <p class="eyebrow">Quiet delivery</p>
+      <h2 id="how-title">Built for the moment you stop watching.</h2>
+      <div class="steps">
+        <article><b>01</b><h3>Install</h3><p>Install the open-source CLI with Homebrew or Go.</p><code>brew install whitekiwi/tap/pushman</code></article>
+        <article><b>02</b><h3>Connect</h3><p>Sign in from the terminal or pair it with the iPhone app.</p><code>pushman login</code></article>
+        <article><b>03</b><h3>Push</h3><p>Send from a shell, CI job, scheduler, or coding agent.</p><code>pushman push "Done"</code></article>
+      </div>
+    </section>
+
+    <section class="section split" aria-labelledby="details-title">
+      <div>
+        <p class="eyebrow">Useful by default</p>
+        <h2 id="details-title">Small interface. Full notification.</h2>
+        <p>Titles, subtitles, URLs, groups, images, sounds, update keys, monospace presentation, device targeting, history, and usage are available without building another notification service.</p>
+      </div>
+      <ul class="feature-list">
+        <li><span>01</span><div><strong>Automation-ready</strong><p>Predictable exit codes, structured output, environment credentials, and MCP over stdio.</p></div></li>
+        <li><span>02</span><div><strong>Account-aware</strong><p>Multiple iPhones and authorized CLIs share one identity and one clear monthly allowance.</p></div></li>
+        <li><span>03</span><div><strong>Private by design</strong><p>Short retention, encrypted sensitive fields, redacted logs, and immediate account deletion.</p></div></li>
+      </ul>
+    </section>
+
+    <section class="beta-card" aria-labelledby="beta-title">
+      <div>
+        <p class="eyebrow">Public beta</p>
+        <h2 id="beta-title">Ready to try. Still earning trust.</h2>
+      </div>
+      <p>Pushman is actively developed and available without an invitation. The beta is free, has no uptime SLA, supports iPhone first, and may change as real-world feedback arrives.</p>
+      <a href="https://github.com/pushmanhq/pushman/issues">Share feedback <span aria-hidden="true">→</span></a>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wordmark"><img src="/icon.png" alt=""><span>Pushman</span></div>
+    <nav aria-label="Footer navigation">
+      <a href="https://app.pushman.whitekiwi.link/privacy/">Privacy</a>
+      <a href="https://app.pushman.whitekiwi.link/support/">Support</a>
+      <a href="https://github.com/pushmanhq/pushman/security">Security</a>
+    </nav>
+    <p>Built quietly by WhiteKiwi.</p>
+  </footer>
+</body>
+</html>

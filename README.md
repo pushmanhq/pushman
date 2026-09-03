@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://app.pushman.whitekiwi.link/">Website</a> ·
+  <a href="https://pushman.whitekiwi.link/">Website</a> ·
   <a href="docs/GETTING_STARTED.md">Get started</a> ·
   <a href="https://github.com/pushmanhq/pushman-cli">CLI source</a> ·
   <a href="SUPPORT.md">Support</a>
@@ -23,7 +23,7 @@ Accepted msg_01M0W2RDPVGEVX7D6ZWFK907B2 for 1 device
 Pushman is a personal push harness for the command line. Install the iPhone app, authorize the CLI once, and turn a command result into a native notification without running your own notification gateway.
 
 > [!NOTE]
-> Pushman for iPhone is preparing for its first App Store release. The download badge will appear here when the public listing is available.
+> Pushman is in public beta and free to try. The iPhone app is preparing for its first App Store release; the download badge will appear here when the public listing is available.
 
 ## Highlights
 
