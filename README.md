@@ -58,7 +58,7 @@ The iPhone app and hosted service are maintained as private implementations. Pub
 
 ## Free beta
 
-During the initial free release, each account can submit up to 200 accepted push requests per calendar month. Messages remain available in synchronized history for seven days. Future paid plans may change allowances without changing the MIT license of the CLI.
+During the initial free release, each account can submit up to 200 accepted push requests per UTC calendar month, plus any current-month support credits. Messages remain available in synchronized history for seven days. See [usage and limit notices](docs/USAGE.md) for counting, reset times, and the quiet limit notification. Future paid plans may change allowances without changing the MIT license of the CLI.
 
 ## Support and security
 

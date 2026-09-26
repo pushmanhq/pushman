@@ -53,6 +53,8 @@ pushman doctor
 
 Run `pushman logout` to revoke the current CLI and remove its local credential. Removing the executable alone does not revoke an authorization.
 
+The current beta iPhone inbox starts with the newest 20 messages and loads more as you scroll. Refresh returns to the newest page; a failed next page keeps existing messages visible and offers a retry. See [usage and limit notices](USAGE.md) for monthly counting and reset behavior.
+
 ## Updates
 
 Homebrew installations can update safely with:
