@@ -12,6 +12,7 @@
   <a href="https://pushman.whitekiwi.link/">Website</a> ·
   <a href="docs/GETTING_STARTED.md">Get started</a> ·
   <a href="https://github.com/pushmanhq/pushman-cli">CLI source</a> ·
+  <a href="https://github.com/pushmanhq/skills">Agent skills</a> ·
   <a href="SUPPORT.md">Support</a>
 </p>
 
@@ -67,6 +68,7 @@ Use [Support](SUPPORT.md) for product help and issue routing. Never post notific
 
 - [`pushmanhq/pushman`](https://github.com/pushmanhq/pushman) — product documentation, public API, support, and roadmap
 - [`pushmanhq/pushman-cli`](https://github.com/pushmanhq/pushman-cli) — open-source CLI, MCP server, packaging, and releases
+- [`pushmanhq/skills`](https://github.com/pushmanhq/skills) — official agent skill and instruction-only plugins for Codex and Claude Code
 - `pushmanhq/pushman-ios` — private iPhone app implementation
 - `pushmanhq/pushman-server` — private hosted-service implementation
 
