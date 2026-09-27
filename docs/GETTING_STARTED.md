@@ -53,6 +53,8 @@ pushman doctor
 
 Run `pushman logout` to revoke the current CLI and remove its local credential. Removing the executable alone does not revoke an authorization.
 
+In CLI v0.3.0 and later, `pushman history show <message-id>` displays message revisions newest first. Revision numbers and the API/MCP machine-readable order are unchanged. Reusing `--key` updates one logical message and retains its revision history; `--group` groups system notifications but does not merge messages in the app's inbox.
+
 The current beta iPhone inbox starts with the newest 20 messages and loads more as you scroll. Refresh returns to the newest page; a failed next page keeps existing messages visible and offers a retry. See [usage and limit notices](USAGE.md) for monthly counting and reset behavior.
 
 ## Updates
@@ -64,6 +66,14 @@ pushman self-update
 ```
 
 The command only updates an executable owned by the official Pushman Homebrew formula. Go and archive installations must be updated using their original installation method.
+
+The current release is [CLI v0.3.0](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.3.0), with macOS, Linux and Windows archives, checksums and build provenance. Go installations use the canonical module path:
+
+```sh
+go install github.com/pushmanhq/pushman-cli/cmd/pushman@v0.3.0
+```
+
+Contributors should use the isolated `pushman-dev` / `pdev` build described in the [contributing guide](https://github.com/pushmanhq/pushman-cli/blob/main/CONTRIBUTING.md), keeping development credentials and endpoints separate from the installed client.
 
 ## AI clients
 
