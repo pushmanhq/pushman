@@ -13,6 +13,8 @@ pushman version
 
 Other verified installation methods are documented in the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md).
 
+On Windows, choose the release ZIP matching x64 or ARM64. Verify its exact SHA-256 entry and GitHub build provenance before extraction, then put `pushman.exe` in a user-writable directory. The CLI guide provides PowerShell commands, user PATH setup, and installation discovery with `Get-Command pushman.exe -All`; no administrator access is required. Windows support here means sending to the iPhone app, not a Windows notification receiving app.
+
 ## 2. Authorize this machine
 
 Use browser-assisted login on a personal terminal:
@@ -41,6 +43,8 @@ printf '%s\n' "Build failed" | pushman push --title "CI"
 
 Use `pushman help push` for every supported notification field. Use `--json` for automation and `--quiet` when only the exit status matters.
 
+For non-ASCII piped bodies in a Windows PowerShell 5.1 console, align `$OutputEncoding` and console input encoding to UTF-8 for the operation, then restore them as shown in the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md). PowerShell 7 uses UTF-8 native pipelines. For `cmd.exe`, redirect a UTF-8 body file with `pushman.exe push - --json < body.txt`. Quote URL arguments containing `&`.
+
 ## 4. Inspect and manage access
 
 ```sh
@@ -67,6 +71,8 @@ pushman self-update
 
 The command only updates an executable owned by the official Pushman Homebrew formula. Go and archive installations must be updated using their original installation method.
 
+On Windows, stop running CLI/MCP processes, verify the replacement ZIP, keep the previous verified executable for rollback, and replace the installed binary before checking `version`. `self-update` does not update a Windows ZIP or Go installation. Run `logout` before deleting the executable if you also want to revoke authorization; removing the binary alone retains it.
+
 The current release is [CLI v0.3.0](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.3.0), with macOS, Linux and Windows archives, checksums and build provenance. Go installations use the canonical module path:
 
 ```sh
@@ -86,6 +92,8 @@ claude mcp add --scope user pushman -- pushman mcp
 ```
 
 Sending changes external state and consumes the account allowance. Agent clients should request confirmation unless the user explicitly supplied the exact notification to send.
+
+For a Windows desktop client, use the absolute path from `(Get-Command pushman.exe).Source`, JSON-escape its backslashes, and set `args: ["mcp"]`. Restart the desktop client after PATH changes. The [MCP guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/MCP.md) includes configuration examples. Run the host under the Windows identity/session that authorized the CLI; a process-scoped automation token permits sending but does not grant MCP read access.
 
 ## Troubleshooting
 

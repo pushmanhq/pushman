@@ -48,6 +48,8 @@ pushman push "Hello from Pushman"
 
 See [Getting Started](docs/GETTING_STARTED.md) for pairing, device selection, updates, and troubleshooting. Source code, release archives, checksums, provenance, and contributor documentation live in [`pushmanhq/pushman-cli`](https://github.com/pushmanhq/pushman-cli).
 
+On Windows, install a verified x64 or ARM64 ZIP using the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md). The native `pushman.exe` is a sender to the iPhone app and also provides local stdio MCP.
+
 ## Public interfaces
 
 - [`api/openapi.yaml`](api/openapi.yaml) documents the supported HTTP interface used by the CLI.
