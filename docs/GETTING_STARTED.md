@@ -43,7 +43,7 @@ printf '%s\n' "Build failed" | pushman push --title "CI"
 
 Use `pushman help push` for every supported notification field. Use `--json` for automation and `--quiet` when only the exit status matters.
 
-For non-ASCII piped bodies in Windows PowerShell 5.1, set `$OutputEncoding` to UTF-8 for that operation and restore it afterward, as shown in the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md). PowerShell 7 uses UTF-8 native pipelines. For `cmd.exe`, redirect a UTF-8 body file with `pushman.exe push - --json < body.txt`. Quote URL arguments containing `&`.
+For non-ASCII piped bodies in a Windows PowerShell 5.1 console, align `$OutputEncoding` and console input encoding to UTF-8 for the operation, then restore them as shown in the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md). PowerShell 7 uses UTF-8 native pipelines. For `cmd.exe`, redirect a UTF-8 body file with `pushman.exe push - --json < body.txt`. Quote URL arguments containing `&`.
 
 ## 4. Inspect and manage access
 
