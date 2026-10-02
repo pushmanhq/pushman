@@ -13,7 +13,7 @@ pushman version
 
 Other verified installation methods are documented in the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md).
 
-On Windows, choose the x64 or ARM64 setup installer from [CLI v0.4.1](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.4.1). Verify its exact SHA-256 entry and GitHub build provenance before running it. The installer adds an Installed apps entry and offers to add the CLI to your user PATH; open a new terminal after installation. Neither Go nor administrator access is required. The installers are currently unsigned, so Windows may show a publisher or SmartScreen warning. Follow the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md) for verification and installation discovery with `Get-Command pushman.exe -All`. ZIP installation remains available. Windows support here means sending to the iPhone app, not a Windows notification receiving app.
+On Windows, choose the x64 or ARM64 setup installer from [CLI v0.4.2](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.4.2). Verify its exact SHA-256 entry and GitHub build provenance before running it. The installer adds an Installed apps entry and offers to add the CLI to your user PATH; open a new terminal after installation. Neither Go nor administrator access is required. The installers are currently unsigned, so Windows may show a publisher or SmartScreen warning. Follow the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md) for verification and installation discovery with `Get-Command pushman.exe -All`. ZIP installation remains available. Windows support here means sending to the iPhone app, not a Windows notification receiving app.
 
 ## 2. Authorize this machine
 
@@ -73,10 +73,10 @@ The command only updates an executable owned by the official Pushman Homebrew fo
 
 On Windows, stop running CLI/MCP processes, verify the newer setup installer, run it against the same installation, then check `version` in a new terminal. A previously verified installer can restore an earlier version. Remove Pushman CLI through Windows Installed apps; removal retains account authorization, so run `logout` first if you also want to revoke it. ZIP and Go installations use their original update/removal method. `self-update` does not update Windows installations.
 
-The current release is [CLI v0.4.1](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.4.1), with macOS/Linux archives, Windows ZIPs and installers, checksums and build provenance. Go installations use the canonical module path:
+The current release is [CLI v0.4.2](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.4.2), with macOS/Linux archives, Windows ZIPs and installers, checksums and build provenance. Go installations use the canonical module path:
 
 ```sh
-go install github.com/pushmanhq/pushman-cli/cmd/pushman@v0.4.1
+go install github.com/pushmanhq/pushman-cli/cmd/pushman@v0.4.2
 ```
 
 Contributors should use the isolated `pushman-dev` / `pdev` build described in the [contributing guide](https://github.com/pushmanhq/pushman-cli/blob/main/CONTRIBUTING.md), keeping development credentials and endpoints separate from the installed client.
