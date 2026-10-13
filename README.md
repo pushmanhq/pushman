@@ -11,6 +11,7 @@
 <p align="center">
   <a href="https://pushman.whitekiwi.link/">Website</a> ·
   <a href="docs/GETTING_STARTED.md">Get started</a> ·
+  <a href="docs/MCP.md">ChatGPT and MCP</a> ·
   <a href="https://github.com/pushmanhq/pushman-cli">CLI source</a> ·
   <a href="https://github.com/pushmanhq/skills">Agent skills</a> ·
   <a href="SUPPORT.md">Support</a>
@@ -21,7 +22,9 @@ $ pushman push "Production deploy finished" --title "Acme API"
 Accepted msg_01M0W2RDPVGEVX7D6ZWFK907B2 for 1 device
 ```
 
-Pushman is a personal push harness for the command line. Install the iPhone app, authorize the CLI once, and turn a command result into a native notification without running your own notification gateway.
+Pushman connects terminals and AI clients to your iPhone. Install the receiving
+app, authorize the CLI or connect hosted OAuth, and turn a requested result into
+a native notification through the hosted service.
 
 > [!NOTE]
 > Pushman is in public beta and free to try. The iPhone app is preparing for its first App Store release; the download badge will appear here when the public listing is available.
@@ -33,7 +36,7 @@ Pushman is a personal push harness for the command line. Install the iPhone app,
 - Browser login or approval from the signed-in iPhone app
 - Multiple receiving devices with explicit targeting
 - Seven-day synchronized history and delivery diagnostics
-- A local stdio MCP server for compatible agent clients
+- Hosted OAuth MCP for ChatGPT and compatible native clients, plus local stdio MCP
 - Native credential storage in the operating-system keyring
 
 ## Install the CLI
@@ -48,12 +51,13 @@ pushman push "Hello from Pushman"
 
 See [Getting Started](docs/GETTING_STARTED.md) for pairing, device selection, updates, and troubleshooting. Source code, release archives, checksums, provenance, and contributor documentation live in [`pushmanhq/pushman-cli`](https://github.com/pushmanhq/pushman-cli).
 
-On Windows, download the x64 or ARM64 installer from [CLI v0.4.2](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.4.2), verify its checksum and build provenance, then install it for your Windows user. Go and administrator access are not required. See the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md) for verification, updates, removal, and the optional ZIP channel. The native `pushman.exe` sends to the iPhone app and also provides local stdio MCP.
+On Windows, download the x64 or ARM64 installer from [CLI v0.5.0](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.5.0), verify its checksum and build provenance, then install it for your Windows user. Go and administrator access are not required. See the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md) for verification, updates, removal, and the optional ZIP channel. The native `pushman.exe` sends to the iPhone app and also provides local stdio MCP.
 
 ## Public interfaces
 
 - [`api/openapi.yaml`](api/openapi.yaml) documents the supported HTTP interface used by the CLI.
-- [`pushman mcp`](https://github.com/pushmanhq/pushman-cli/blob/main/docs/MCP.md) exposes local stdio tools for compatible AI clients.
+- [Hosted OAuth MCP](docs/MCP.md) connects through account consent without a CLI.
+- [`pushman mcp`](https://github.com/pushmanhq/pushman-cli/blob/main/docs/MCP.md) exposes 17 local stdio tools for compatible AI clients in CLI v0.5.0.
 - The production service is hosted at `https://api.pushman.whitekiwi.link/v1`.
 
 The iPhone app and hosted service are maintained as private implementations. Publishing the CLI and public contract does not publish service credentials, mobile signing material, or private operational configuration.
@@ -70,7 +74,7 @@ Use [Support](SUPPORT.md) for product help and issue routing. Never post notific
 
 - [`pushmanhq/pushman`](https://github.com/pushmanhq/pushman) — product documentation, public API, support, and roadmap
 - [`pushmanhq/pushman-cli`](https://github.com/pushmanhq/pushman-cli) — open-source CLI, MCP server, packaging, and releases
-- [`pushmanhq/skills`](https://github.com/pushmanhq/skills) — official agent skill and instruction-only plugins for Codex and Claude Code
+- [`pushmanhq/skills`](https://github.com/pushmanhq/skills) — maintained skills, hosted OAuth plugin ZIP, and local Codex/Claude marketplaces
 - `pushmanhq/pushman-ios` — private iPhone app implementation
 - `pushmanhq/pushman-server` — private hosted-service implementation
 
