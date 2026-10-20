@@ -18,4 +18,4 @@ The current beta iPhone app also shows a non-interruptive usage notice. After a 
 
 ## Getting help
 
-Use the [private support contact](https://app.pushman.whitekiwi.link/support/) for account-specific problems. In the current beta app, copy the account ID from **Settings → Account → Account ID → Copy account ID** when support requests it. Never post account IDs, notification content, or credentials in public issues.
+Use the [private support contact](https://app.pushman.io/support/) for account-specific problems. In the current beta app, copy the account ID from **Settings → Account → Account ID → Copy account ID** when support requests it. Never post account IDs, notification content, or credentials in public issues.

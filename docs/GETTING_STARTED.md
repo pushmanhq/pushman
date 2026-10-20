@@ -19,6 +19,18 @@ On Windows, choose the x64 or ARM64 setup installer from [CLI v0.5.0](https://gi
 
 ## 2. Authorize this machine
 
+Existing CLI releases use the previous API origin by default. Set the new
+endpoint for the terminal session before login and keep it for later commands:
+
+```sh
+export PUSHMAN_API_URL=https://api.pushman.io/v1
+```
+
+In PowerShell, use `$env:PUSHMAN_API_URL = "https://api.pushman.io/v1"` for
+the current session. Local MCP processes must receive the same environment
+variable and use the login for that endpoint. Existing endpoint logins are
+retained separately. These settings do not change an installed iPhone app.
+
 Use browser-assisted login on a personal terminal:
 
 ```sh

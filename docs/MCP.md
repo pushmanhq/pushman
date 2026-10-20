@@ -15,8 +15,11 @@ Use the Pushman plugin when it is available in your plugin directory, or configu
 a compatible native client's supported OAuth MCP connection to:
 
 ```text
-https://app.pushman.whitekiwi.link/mcp
+https://app.pushman.io/mcp
 ```
+
+When moving from the previous server URL, create a new OAuth connection;
+existing authorizations cannot be moved to another resource URL.
 
 Choose OAuth, sign in with Google or Apple and review the requested permissions.
 Each connection has its own sender name, history and revocation. The client

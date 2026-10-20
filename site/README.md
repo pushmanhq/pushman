@@ -1,8 +1,7 @@
 # Pushman product site
 
-This dependency-free static site is the source for `https://pushman.whitekiwi.link`.
+This dependency-free static site is the source for `https://pushman.io`.
 It follows the private Pushman design guidelines while publishing only supported product behavior.
 
-The Mac mini installation and ingress procedure is maintained in the private `WhiteKiwi/home-hub`
-repository. Do not add analytics, credentials, unreleased plans, or production infrastructure details
-to this public directory.
+Deployment is managed separately. Keep only public static assets here. Do not add
+analytics, credentials, unreleased plans, or production infrastructure details.
