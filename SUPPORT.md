@@ -1,6 +1,6 @@
 # Support
 
-For help with the iPhone app, an account, or private details, use the public [Pushman support page](https://app.pushman.whitekiwi.link/support/). It provides an email contact and does not require a GitHub account.
+For help with the iPhone app, an account, or private details, use the public [Pushman support page](https://app.pushman.io/support/). It provides an email contact and does not require a GitHub account.
 
 For a reproducible product bug or feature proposal that contains no private data, search the [Pushman issue tracker](https://github.com/pushmanhq/pushman/issues) before opening a new issue.
 
