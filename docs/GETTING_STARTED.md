@@ -23,7 +23,7 @@ CLI v0.5.2 defaults to `https://api.pushman.io/v1`. Log in once at this endpoint
 after updating. Credentials for older endpoints remain separate.
 
 Update the CLI and iPhone app to their current versions. Previous
-`pushman.whitekiwi.link` service addresses are retired and return `410 Gone`.
+`pushman.whitekiwi.link` service addresses are retired.
 Restart local MCP clients after updating. Hosted MCP connections use
 `https://app.pushman.io/mcp` and require a new OAuth connection when moving
 from the retired address.
