@@ -22,16 +22,11 @@ On Windows, choose the x64 or ARM64 setup installer from [CLI v0.5.2](https://gi
 CLI v0.5.2 defaults to `https://api.pushman.io/v1`. Log in once at this endpoint
 after updating. Credentials for older endpoints remain separate.
 
-If you keep an older published release, set its endpoint for the terminal session
-before login and later commands:
-
-```sh
-export PUSHMAN_API_URL=https://api.pushman.io/v1
-```
-
-In PowerShell, use `$env:PUSHMAN_API_URL = "https://api.pushman.io/v1"`.
-Older local MCP processes need the same environment override. These settings do
-not change an installed iPhone app.
+Update the CLI and iPhone app to their current versions. Previous
+`pushman.whitekiwi.link` service addresses are retired and return `410 Gone`.
+Restart local MCP clients after updating. Hosted MCP connections use
+`https://app.pushman.io/mcp` and require a new OAuth connection when moving
+from the retired address.
 
 Use browser-assisted login on a personal terminal:
 
