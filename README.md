@@ -45,25 +45,24 @@ Homebrew is recommended on macOS and Linux:
 
 ```sh
 brew install whitekiwi/tap/pushman
-export PUSHMAN_API_URL=https://api.pushman.io/v1
 pushman login
 pushman push "Hello from Pushman"
 ```
 
 See [Getting Started](docs/GETTING_STARTED.md) for pairing, device selection, updates, and troubleshooting. Source code, release archives, checksums, provenance, and contributor documentation live in [`pushmanhq/pushman-cli`](https://github.com/pushmanhq/pushman-cli).
 
-On Windows, download the x64 or ARM64 installer from [CLI v0.5.0](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.5.0), verify its checksum and build provenance, then install it for your Windows user. Go and administrator access are not required. See the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md) for verification, updates, removal, and the optional ZIP channel. The native `pushman.exe` sends to the iPhone app and also provides local stdio MCP.
+On Windows, download the x64 or ARM64 installer from [CLI v0.5.2](https://github.com/pushmanhq/pushman-cli/releases/tag/v0.5.2), verify its checksum and build provenance, then install it for your Windows user. Go and administrator access are not required. See the [CLI installation guide](https://github.com/pushmanhq/pushman-cli/blob/main/docs/INSTALL.md) for verification, updates, removal, and the optional ZIP channel. The native `pushman.exe` sends to the iPhone app and also provides local stdio MCP.
 
 ## Public interfaces
 
 - [`api/openapi.yaml`](api/openapi.yaml) documents the supported HTTP interface used by the CLI.
 - [Hosted OAuth MCP](docs/MCP.md) connects through account consent without a CLI.
-- [`pushman mcp`](https://github.com/pushmanhq/pushman-cli/blob/main/docs/MCP.md) exposes 17 local stdio tools for compatible AI clients in CLI v0.5.0.
+- [`pushman mcp`](https://github.com/pushmanhq/pushman-cli/blob/main/docs/MCP.md) exposes 17 local stdio tools for compatible AI clients in CLI v0.5.2.
 - The production service is hosted at `https://api.pushman.io/v1`.
 
-Existing CLI releases still default to the previous API origin. Set
-`PUSHMAN_API_URL=https://api.pushman.io/v1` in every CLI and local MCP process
-until using a release with the updated default, then log in at that endpoint.
+CLI v0.5.2 defaults to the current API origin. For older published releases, set
+`PUSHMAN_API_URL=https://api.pushman.io/v1` in every CLI and local MCP process.
+Log in at the new endpoint after updating.
 Credentials remain separate for each endpoint; the old login is not copied.
 Changing the hosted MCP URL requires a new OAuth connection. Existing installed
 iPhone apps also retain their compiled endpoint until updated.
