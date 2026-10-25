@@ -549,6 +549,11 @@ components:
     LogicalMessageId:
       type: string
       pattern: ^lmsg_[0-9A-HJKMNP-TV-Z]{26}$
+    RestrictedIdentifier:
+      type: string
+      minLength: 1
+      maxLength: 64
+      pattern: ^[A-Za-z0-9._:-]+$
     DeliveryState:
       type: string
       enum:
@@ -573,6 +578,14 @@ components:
           $ref: '#/components/schemas/MessageId'
         logicalMessageId:
           $ref: '#/components/schemas/LogicalMessageId'
+        group:
+          $ref: '#/components/schemas/RestrictedIdentifier'
+        groupId:
+          type: string
+          description: Opaque sender-scoped group identity. Present with group; absent for ungrouped messages. Display names must not be used as grouping keys.
+          minLength: 43
+          maxLength: 43
+          pattern: ^[A-Za-z0-9_-]{43}$
         title:
           type: string
         subtitle:
@@ -603,11 +616,6 @@ components:
             $ref: '#/components/schemas/MessageSummary'
         nextCursor:
           type: string
-    RestrictedIdentifier:
-      type: string
-      minLength: 1
-      maxLength: 64
-      pattern: ^[A-Za-z0-9._:-]+$
     MessageInput:
       type: object
       additionalProperties: false

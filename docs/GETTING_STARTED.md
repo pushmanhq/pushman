@@ -68,9 +68,9 @@ pushman doctor
 
 Run `pushman logout` to revoke the current CLI and remove its local credential. Removing the executable alone does not revoke an authorization.
 
-In CLI v0.3.0 and later, `pushman history show <message-id>` displays message revisions newest first. Revision numbers and the API/MCP machine-readable order are unchanged. Reusing `--key` updates one logical message and retains its revision history; `--group` groups system notifications but does not merge messages in the app's inbox.
+In CLI v0.3.0 and later, `pushman history show <message-id>` displays message revisions newest first. Revision numbers and the API/MCP machine-readable order are unchanged. Reusing `--key` updates one logical message and retains its revision history. Use `--group` to group distinct notifications from the same sender in system notifications and the compatible iPhone Inbox. Different senders remain separate even when their names match.
 
-The current beta iPhone inbox starts with the newest 20 messages and loads more as you scroll. Refresh returns to the newest page; a failed next page keeps existing messages visible and offers a retry. See [usage and limit notices](USAGE.md) for monthly counting and reset behavior.
+The current beta iPhone Inbox starts with the newest 20 messages and loads more as you scroll. Groups with multiple loaded messages start collapsed; expand one to open or delete individual messages. The group count describes messages already loaded. If a collapsed group keeps the paging footer visible, automatic loading pauses after one additional page. Choose **Load more messages** to continue without expanding the group. Refresh returns to the newest page; a failed next page keeps existing messages visible and offers a retry. See [usage and limit notices](USAGE.md) for monthly counting and reset behavior.
 
 ## Updates
 
