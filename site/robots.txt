@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pushman.io/sitemap.xml
