@@ -18,3 +18,10 @@
 Pushman generates the immutable message ID. Callers do not supply it. Message history expires after seven days, while delivery acceptance counts toward the monthly account allowance.
 
 For exact validation rules and schemas, see the [public OpenAPI contract](../api/openapi.yaml). For command syntax, run `pushman help push` using the installed CLI version.
+
+## Removing a receiving device
+
+Pushman skips queued delivery when it finds that the receiving device has been
+removed or has notifications disabled. Your other eligible devices can still receive
+the notification. A delivery already in progress may still arrive after removal.
+Removing a device does not refund an accepted send or change your monthly usage.
